@@ -77,7 +77,7 @@ namespace SrkCsv
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns></returns>
-        public Table<T> ReadToEnd(StringReader reader)
+        public Table<T> ReadToEnd(TextReader reader)
         {
             var data = new List<List<string>>();
 
@@ -89,7 +89,7 @@ namespace SrkCsv
             return table;
         }
 
-        private void ParseToEnd(StringReader reader, List<List<string>> data, List<string> errors)
+        private void ParseToEnd(TextReader reader, List<List<string>> data, List<string> errors)
         {
             errors = new List<string>();
             var err = new Action<int, string>((int lineIndex1, string error) =>
