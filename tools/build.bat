@@ -78,9 +78,9 @@ echo Done.
 echo:
 echo Copy libs
 echo -----------------------------
-mkdir %outputDirectory%\lib
-mkdir %outputDirectory%\lib\net40
-xcopy /Q %solutionDirectory%\SrkCsv\bin\Release\* %outputDirectory%\lib\net40
+mkdir %outputDirectory%\build\lib
+mkdir %outputDirectory%\build\lib\net40
+xcopy /Q %solutionDirectory%\SrkCsv\bin\Release\* %outputDirectory%\build\lib\net40
 echo Done.
 
 
@@ -92,14 +92,14 @@ echo -----------------------------
 
 echo Hit return to continue...
 pause 
-%vincrement% -file=%outputDirectory%\version.txt 0.0.1 %outputDirectory%\version.txt
+%vincrement% -file=%outputDirectory%\build\version.txt 0.0.1 %outputDirectory%\build\version.txt
 if not %ERRORLEVEL% == 0 (
  echo ERROR: vincrement. exiting.
  cd %currentDirectory%
  pause
  exit
 )
-set /p version=<%outputDirectory%\version.txt
+set /p version=<%outputDirectory%\build\version.txt
 echo Done: %version%
 
 
@@ -110,7 +110,7 @@ echo -----------------------------
 
 echo Hit return to continue...
 pause 
-cd %outputDirectory%
+cd %outputDirectory%\build
 %nuget% pack SrkCsv.nuspec -Version %version%
 echo Done.
 
