@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrkCsv", "SrkCsv\SrkCsv.csproj", "{9CCF4C69-4F91-46E1-B185-66E9D4EA9FB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrkCsv.UnitTests", "SrkCsv.UnitTests\SrkCsv.UnitTests.csproj", "{5247402A-526A-4226-B472-B727137DD5B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CCF4C69-4F91-46E1-B185-66E9D4EA9FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CCF4C69-4F91-46E1-B185-66E9D4EA9FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CCF4C69-4F91-46E1-B185-66E9D4EA9FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CCF4C69-4F91-46E1-B185-66E9D4EA9FB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5247402A-526A-4226-B472-B727137DD5B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5247402A-526A-4226-B472-B727137DD5B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5247402A-526A-4226-B472-B727137DD5B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5247402A-526A-4226-B472-B727137DD5B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
