@@ -7,49 +7,33 @@ namespace SrkCsv
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Column information.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Column<T>
     {
-        private Action<Cell<T>> parser;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Column{T}"/> class.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="col">The col.</param>
         public Column(int index, string col)
         {
             this.Index = index;
             this.Name = col;
-
-            ////this.CreateParser();
         }
 
+        /// <summary>
+        /// Gets or sets the column index.
+        /// </summary>
         public int Index { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
         public string Name { get; set; }
 
         internal Predicate<Cell<T>> Transform { get; set; }
-
-        ////public static IList<ColumnParser> Parsers
-        ////{
-        ////    get { return parsers.Select(p => new ColumnParser { Name = p.Key, }).ToArray(); }
-        ////}
-
-        ////public void Parse(Cell<T> cell)
-        ////{
-        ////    if (this.parser != null)
-        ////    {
-        ////        this.parser(cell);
-        ////    }
-        ////}
-
-        ////private static void AddParser(ColumnParser parser)
-        ////{
-        ////    parsers.Add(parser.Name.ToLowerInvariant(), parser);
-        ////}
-
-        ////private void CreateParser()
-        ////{
-        ////    var lowerName = this.Name.ToLowerInvariant();
-        ////    if (parsers.ContainsKey(lowerName))
-        ////        this.parser = parsers[lowerName].Action;
-        ////    else
-        ////        throw new InvalidOperationException("Unrecognized column '" + this.Name + "' ");
-        ////}
     }
 }

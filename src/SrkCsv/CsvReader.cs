@@ -11,6 +11,9 @@ namespace SrkCsv
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Basic CSV reader.
+    /// </summary>
     public class CsvReader : CsvReader<Nothing>
     {
         public CsvReader()
@@ -24,30 +27,56 @@ namespace SrkCsv
         }
     }
 
+    /// <summary>
+    /// CSV reader with support for a target object type.
+    /// </summary>
+    /// <typeparam name="T">the target object type</typeparam>
     public class CsvReader<T>
     {
         private readonly Table<T> table;
         private CultureInfo culture = CultureInfo.InvariantCulture;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CsvReader{T}"/> class.
+        /// </summary>
         public CsvReader()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CsvReader{T}"/> class.
+        /// </summary>
+        /// <param name="table">The table.</param>
         public CsvReader(Table<T> table)
         {
             this.table = table;
         }
 
+        /// <summary>
+        /// Gets or sets the cell separator.
+        /// </summary>
+        /// <value>
         public char CellSeparator { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [has header line].
+        /// </summary>
         public bool HasHeaderLine { get; set; }
 
+        /// <summary>
+        /// Gets or sets the culture.
+        /// </summary>
         public CultureInfo Culture
         {
             get { return this.culture; }
             set { this.culture = value; }
         }
 
+        /// <summary>
+        /// Reads to end.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns></returns>
         public Table<T> ReadToEnd(StringReader reader)
         {
             var data = new List<List<string>>();
