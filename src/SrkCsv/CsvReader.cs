@@ -1,6 +1,7 @@
 ﻿
 namespace SrkCsv
 {
+    using SrkCsv.Internals;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -10,16 +11,29 @@ namespace SrkCsv
     using System.Text;
     using System.Threading.Tasks;
 
-    public class CsvReader
+    public class CsvReader : CsvReader<Nothing>
     {
-        private Table table;
+        public CsvReader()
+            : base()
+        {
+        }
+
+        public CsvReader(Table table)
+            : base(table)
+        {
+        }
+    }
+
+    public class CsvReader<T>
+    {
+        private readonly Table<T> table;
         private CultureInfo culture = CultureInfo.InvariantCulture;
 
         public CsvReader()
         {
         }
 
-        public CsvReader(Table table)
+        public CsvReader(Table<T> table)
         {
             this.table = table;
         }
@@ -34,14 +48,14 @@ namespace SrkCsv
             set { this.culture = value; }
         }
 
-        public Table ReadToEnd(StringReader reader)
+        public Table<T> ReadToEnd(StringReader reader)
         {
             var data = new List<List<string>>();
 
             var errors = new List<string>();
             this.ParseToEnd(reader, data, errors);
             var table = this.table.Clone(false);
-            table.Rows = new List<Row>(data.Count);
+            table.Rows = new List<Row<T>>(data.Count);
             this.Transform(data, errors, table);
             return table;
         }
@@ -194,7 +208,7 @@ namespace SrkCsv
             }
         }
 
-        private void Transform(List<List<string>> data, List<string> errors, Table table)
+        private void Transform(List<List<string>> data, List<string> errors, Table<T> table)
         {
             var err = new Action<int, string>((int line, string error) =>
             {
@@ -210,7 +224,7 @@ namespace SrkCsv
                     var row = this.table.CreateRow(i, culture, this.HasHeaderLine && i == 0);
                     table.Rows.Add(row);
 
-                    var cells = new List<Cell>(table.Columns.Count);
+                    var cells = new List<Cell<T>>(table.Columns.Count);
                     for (int c = 0; c < table.Columns.Count; c++)
                     {
                         var col = table.Columns[c];
@@ -221,8 +235,12 @@ namespace SrkCsv
                         }
 
                         var cellObj = this.table.CreateCell(col, row, cell);
-                        row.SetTarget(cellObj.GetTarget());
-                        col.Transform(cellObj);
+                        row.Target = cellObj.Target;
+                        if (!row.IsHeader && col.Transform != null && !col.Transform(cellObj))
+                        {
+                            errors.Add("Parse failed at row:" + i + " col:" + c);
+                        }
+
                         cells.Add(cellObj);
                     }
 
@@ -241,7 +259,11 @@ namespace SrkCsv
                 }
             }
 
-            if (errors.Count > 0)
+            if (errors.Count == 1)
+            {
+                throw new CsvParseException(errors[0], errors);
+            }
+            else if (errors.Count > 1)
             {
                 throw new CsvParseException("Parse failed with " + errors.Count + " errors.", errors);
             }

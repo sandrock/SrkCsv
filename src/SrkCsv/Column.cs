@@ -7,9 +7,9 @@ namespace SrkCsv
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Column
+    public class Column<T>
     {
-        private Action<Cell> parser;
+        private Action<Cell<T>> parser;
 
         public Column(int index, string col)
         {
@@ -23,20 +23,20 @@ namespace SrkCsv
 
         public string Name { get; set; }
 
-        internal Action<Cell> Transform { get; set; }
+        internal Predicate<Cell<T>> Transform { get; set; }
 
         ////public static IList<ColumnParser> Parsers
         ////{
         ////    get { return parsers.Select(p => new ColumnParser { Name = p.Key, }).ToArray(); }
         ////}
 
-        public void Parse(Cell cell)
-        {
-            if (this.parser != null)
-            {
-                this.parser(cell);
-            }
-        }
+        ////public void Parse(Cell<T> cell)
+        ////{
+        ////    if (this.parser != null)
+        ////    {
+        ////        this.parser(cell);
+        ////    }
+        ////}
 
         ////private static void AddParser(ColumnParser parser)
         ////{

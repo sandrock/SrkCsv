@@ -7,7 +7,7 @@ namespace SrkCsv
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Cell
+    public class Cell<T>
     {
         private bool isDisposed;
 
@@ -15,8 +15,8 @@ namespace SrkCsv
         {
         }
 
-        public Row Row { get; set; }
-        public Column Column { get; set; }
+        public Row<T> Row { get; set; }
+        public Column<T> Column { get; set; }
         public string Value { get; set; }
 
         public void Dispose()
@@ -42,13 +42,6 @@ namespace SrkCsv
         internal object GetTarget()
         {
             return null;
-        }
-    }
-
-    public class Cell<T> : Cell
-    {
-        public Cell()
-        {
         }
 
         public T Target { get; set; }

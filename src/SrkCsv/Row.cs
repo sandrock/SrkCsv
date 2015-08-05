@@ -8,11 +8,11 @@ namespace SrkCsv
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Row
+    public class Row<T>
     {
         private readonly Dictionary<string, object> data = new Dictionary<string, object>();
         private int i;
-        private IList<Cell> cells = new List<Cell>();
+        private IList<Cell<T>> cells = new List<Cell<T>>();
 
         public Row(int i)
         {
@@ -45,7 +45,7 @@ namespace SrkCsv
 
         public bool IsHeader { get; set; }
 
-        public IList<Cell> Cells
+        public IList<Cell<T>> Cells
         {
             get { return this.cells; }
             set { this.cells = value; }
@@ -54,20 +54,7 @@ namespace SrkCsv
         internal virtual void SetTarget(object target)
         {
         }
-    }
-
-    public class Row<T> : Row
-    {
-        public Row(int i)
-            : base(i)
-        {
-        }
 
         public T Target { get; set; }
-
-        internal override void SetTarget(object target)
-        {
-            this.Target = (T)target;
-        }
     }
 }
