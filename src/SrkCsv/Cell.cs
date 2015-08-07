@@ -51,6 +51,11 @@ namespace SrkCsv
             GC.SuppressFinalize(this);
         }
 
+        public override string ToString()
+        {
+            return "Cell<" + typeof(T).Name + "> " + this.Value;
+        }
+
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources.
         /// </summary>

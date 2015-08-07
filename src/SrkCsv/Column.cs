@@ -35,5 +35,10 @@ namespace SrkCsv
         public string Name { get; set; }
 
         internal Predicate<Cell<T>> Transform { get; set; }
+
+        public override string ToString()
+        {
+            return "Column<" + typeof(T).Name + "> [" + this.Index + "] " + this.Name;
+        }
     }
 }

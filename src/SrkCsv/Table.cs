@@ -91,6 +91,11 @@ namespace SrkCsv
             return this;
         }
 
+        public override string ToString()
+        {
+            return "Table<" + typeof(T).Name + "> Columns:" + (this.columns != null ? this.columns.Count.ToString() : "none") + " Rows:" + (this.Rows != null ? this.Rows.Count.ToString() : "none");
+        }
+
         internal Table<T> Clone(bool copyRows)
         {
             return new Table<T>

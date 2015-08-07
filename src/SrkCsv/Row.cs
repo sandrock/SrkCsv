@@ -79,6 +79,14 @@ namespace SrkCsv
             return this.data.ContainsKey(key) ? (T)this.data[key] : default(T);
         }
 
+        public override string ToString()
+        {
+            if (this.cells != null)
+                return "Row<" + typeof(T).Name + "> [" + this.i + "] " + string.Join(" ; ", this.cells);
+            else
+                return "Row<" + typeof(T).Name + "> [" + this.i + "] ";
+        }
+
         internal virtual void SetTarget(object target)
         {
         }
