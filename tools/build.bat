@@ -123,7 +123,7 @@ echo -----------------------------
 
 echo Hit return to continue...
 pause 
-cd %outputDirectory%
+cd %outputDirectory%\build
 %nuget% push SrkCsv.%version%.nupkg
 echo Done.
 
