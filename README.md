@@ -1,6 +1,8 @@
 # SrkCsv
 
-Super Fast & Super light CSV parser that uses lambas to create data objects. [nuget: SrkCsv](https://www.nuget.org/packages/SrkCsv/)
+![SrkCsv logo](https://raw.githubusercontent.com/sandrock/SrkCsv/master/res/logo-64.png)
+
+Super Fast :zap: & Super light :candy: CSV parser that uses lambas :pizza: to create data objects. [nuget: SrkCsv](https://www.nuget.org/packages/SrkCsv/)
 
 ```powershell
 PM> Install-Package SrkCsv
@@ -8,15 +10,15 @@ PM> Install-Package SrkCsv
 
 Steps to read your CSV now:
 
-1. Install the nuget package SrkCsv.
-2. Have a class with properties that represent a row of your file.
-3. Create a `var table = new Table<YourRowType>()`.
-4. Define the columns you want to parse using   
+1. Install the nuget package SrkCsv. :balloon:
+2. Have a class with properties that represent a row of your file. :v:
+3. Create a `var table = new Table<YourRowType>()`.  :seedling:
+4. Define the columns you want to parse using :eyes:  
 `table.AddColumn(0, "Firstname", row => row.Target.Firstname = row.Value);`.
-5. Create a reader `var reader = new CsvReader<YourRowType>(table);`. You may need to configure it.
+5. Create a reader `var reader = new CsvReader<YourRowType>(table);`. You may need to configure it. :wrench:
 6. Pass anything inheriting from `TextReader` to `reader.ReadToEnd(reader)`.  
-A `StreamReader` or a `StringReader` will do the job.
-7. Your `table` object is now filled (check `table.Rows`).
+A `StreamReader` or a `StringReader` will do the job. :floppy_disk:
+7. Your `table` object is now filled (check `table.Rows`).  :clap:
 
 This unit test will show you how it looks like:
 
@@ -72,3 +74,4 @@ Matt,Gorgini,Lille,45
 Paul,Menier,Valenciennes,100
 ```
 
+Have a good parse!  :running:
