@@ -33,6 +33,7 @@ You can find tons of CSV readers everywhere on the interwebs. But:
 - you won't find a CSV reader that uses so few lines of code (this is a lie).  :speak_no_evil:
 - this package does only :one: thing: parse a CSV. the other packages do a lot more things (write, sort, cache, serialize, coma-tize and so on). So if you like simplicity, here it is.
 - it's free!  :beer:
+- the assembly has a strong name.  :cake:
 
 
 Example
