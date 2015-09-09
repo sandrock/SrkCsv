@@ -8,7 +8,8 @@ Super Fast :zap: & Super light :candy: CSV parser that uses lambas :pizza: to cr
 PM> Install-Package SrkCsv
 ```
 
-Steps to read your CSV now:
+Steps to read your CSV now
+---------------------------
 
 1. Install the nuget package SrkCsv. :balloon:
 2. Have a class with properties that represent a row of your file. :v:
@@ -19,6 +20,23 @@ Steps to read your CSV now:
 6. Pass anything inheriting from `TextReader` to `reader.ReadToEnd(reader)`.  
 A `StreamReader` or a `StringReader` will do the job. :floppy_disk:
 7. Your `table` object is now filled (check `table.Rows`).  :clap:
+
+Example below. 
+
+
+Why another CSV reader?
+------------------------
+
+You can find tons of CSV readers everywhere on the interwebs. But:
+
+- **you won't find a CSV reader with a funny readme.**  :point_up:
+- you won't find a CSV reader that uses so few lines of code (this is a lie).  :speak_no_evil:
+- this package does only :one: thing: parse a CSV. the other packages do a lot more things (write, sort, cache, serialize, coma-tize and so on). So if you like simplicity, here it is.
+- it's free!  :beer:
+
+
+Example
+--------
 
 This unit test will show you how it looks like:
 
@@ -73,5 +91,8 @@ Gregory,Malkov,Paris,20
 Matt,Gorgini,Lille,45
 Paul,Menier,Valenciennes,100
 ```
+
+And as always...
+-----------------
 
 Have a good parse!  :running:
