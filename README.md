@@ -1,9 +1,24 @@
 # SrkCsv
 
-Fast CSV parser that uses lambas to create data objects.
+Super Fast & Super light CSV parser that uses lambas to create data objects. [nuget: SrkCsv](https://www.nuget.org/packages/SrkCsv/)
 
+```powershell
+PM> Install-Package SrkCsv
+```
 
-What it looks like:
+Steps to read your CSV now:
+
+1. Install the nuget package SrkCsv.
+2. Have a class with properties that represent a row of your file.
+3. Create a `var table = new Table<YourRowType>()`.
+4. Define the columns you want to parse using   
+`table.AddColumn(0, "Firstname", row => row.Target.Firstname = row.Value);`.
+5. Create a reader `var reader = new CsvReader<YourRowType>(table);`. You may need to configure it.
+6. Pass anything inheriting from `TextReader` to `reader.ReadToEnd(reader)`.  
+A `StreamReader` or a `StringReader` will do the job.
+7. Your `table` object is now filled (check `table.Rows`).
+
+This unit test will show you how it looks like:
 
 ```csharp
 [TestMethod]
