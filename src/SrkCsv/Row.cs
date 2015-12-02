@@ -5,8 +5,6 @@ namespace SrkCsv
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Row information and data.
@@ -68,12 +66,12 @@ namespace SrkCsv
             set { this.cells = value; }
         }
 
-        public void SetAttachment<T>(T data)
+        public void SetAttachment(T data)
         {
             this.data[typeof(T).FullName] = data;
         }
 
-        public T GetAttachment<T>()
+        public T GetAttachment()
         {
             var key = typeof(T).FullName;
             return this.data.ContainsKey(key) ? (T)this.data[key] : default(T);

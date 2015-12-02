@@ -5,7 +5,6 @@ namespace SrkCsv
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using System.Text;
 
     /// <summary>
     /// Exception that occur during parsing operations.
