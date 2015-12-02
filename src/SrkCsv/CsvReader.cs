@@ -55,7 +55,6 @@ namespace SrkCsv
         /// <summary>
         /// Gets or sets the cell separator.
         /// </summary>
-        /// <value>
         public char CellSeparator { get; set; }
 
         /// <summary>
@@ -173,7 +172,11 @@ namespace SrkCsv
 
                     if (c == separator)
                     {
-                        if (inCell)
+                        if (inQuotes)
+                        {
+                            // do nothing here
+                        }
+                        else if (inCell)
                         {
                             inCell = false;
                         }

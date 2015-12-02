@@ -108,5 +108,39 @@ namespace SrkCsv.UnitTests
                 Assert.AreEqual(100, result.Rows[3].Target.Age);
             }
         }
+
+        [TestClass]
+        public class SampleCsvFiles
+        {
+            [TestMethod]
+            public void FranceLibraries()
+            {
+                // this test resolved a bug (line 98814)
+                // a separator within a quoted value did make the algorithm quit the cell
+                // https://www.data.gouv.fr/s/resources/adresses-des-bibliotheques-publiques/20151027-100052/adresses_bibliotheques_2014.csv
+                string sample = @"insee,libelle1,libelle2,voie_num,voie_type,voie_nom,local,voie,CPBIBLIO,CEDEXB,BP,ville,DEPT,REGION,population_legale
+01004,Médiathèque Municipale,La Grenette,10,rue,Amédée Bonnet,,10 rue Amédée Bonnet,01500,,,Ambérieu-en-Bugey,01,82,14347
+01081,""Bibliothèque """"le Champ Du Livre"""""",,564,route,des Burgondes,,564 rue des Burgondes,01410,,,Champfromier,01,82,694
+35195,""""""la Majuscule"""" Bibliothèque Municipale"",,10,rue,du Clos Gérard,,10 rue du Clos Gérard,35440,,,Montreuil-sur-Ille,35,53,2153
+38528,Bibliotheque Municipale,""""""LA LICONTE"""""",195,Promenade des Noyers,,,195 Promenade des Noyers,38410,,,Vaulnaveys-le-Bas,38,82,1227
+98814,""Bibliotheque Provinciale, Service Culturel"",Association Löhna - Médiathèque Löhna,,WE,,B.P. 752,WE,98820,,BP 50,Lifou,988,NC,21244
+";
+
+                var table = new Table();
+                table.AddColumn(1, "name1");
+                table.AddColumn(2, "name2");
+                var target = new CsvReader(table);
+                target.CellSeparator = ',';
+                target.HasHeaderLine = true;
+                var reader = new StringReader(sample);
+                var result = target.ReadToEnd(reader);
+
+                Assert.AreEqual(6, result.Rows.Count);
+                Assert.AreEqual("Bibliothèque \"le Champ Du Livre\"", result.Rows[2].Cells[0].Value);
+                Assert.AreEqual("\"la Majuscule\" Bibliothèque Municipale", result.Rows[3].Cells[0].Value);
+                Assert.AreEqual("\"LA LICONTE\"", result.Rows[4].Cells[1].Value);
+                Assert.AreEqual("Bibliotheque Provinciale, Service Culturel", result.Rows[5].Cells[0].Value);
+            }
+        }
     }
 }
