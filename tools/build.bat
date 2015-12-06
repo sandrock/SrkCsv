@@ -9,7 +9,7 @@ echo:
 
 set currentDirectory=%CD%
 cd ..
-cd Package
+cd build
 set outputDirectory=%CD%
 cd %currentDirectory%
 set nuget=%CD%\..\tools\nuget.exe
@@ -78,9 +78,9 @@ echo Done.
 echo:
 echo Copy libs
 echo -----------------------------
-mkdir %outputDirectory%\build\lib
-mkdir %outputDirectory%\build\lib\net40
-xcopy /Q %solutionDirectory%\SrkCsv\bin\Release\* %outputDirectory%\build\lib\net40
+mkdir %outputDirectory%\lib
+mkdir %outputDirectory%\lib\net40
+xcopy /Q %solutionDirectory%\SrkCsv\bin\Release\* %outputDirectory%\lib\net40\
 echo Done.
 
 
@@ -92,14 +92,14 @@ echo -----------------------------
 
 echo Hit return to continue...
 pause 
-%vincrement% -file=%outputDirectory%\build\version.txt 0.0.1 %outputDirectory%\build\version.txt
+%vincrement% -file=%currentDirectory%\..\version.txt 0.0.1 %currentDirectory%\..\version.txt
 if not %ERRORLEVEL% == 0 (
  echo ERROR: vincrement. exiting.
  cd %currentDirectory%
  pause
  exit
 )
-set /p version=<%outputDirectory%\build\version.txt
+set /p version=<%currentDirectory%\..\version.txt
 echo Done: %version%
 
 
@@ -110,8 +110,8 @@ echo -----------------------------
 
 echo Hit return to continue...
 pause 
-cd %outputDirectory%\build
-%nuget% pack SrkCsv.nuspec -Version %version%
+cd %outputDirectory%
+%nuget% pack %outputDirectory%\..\SrkCsv.nuspec -BasePath %outputDirectory% -Version %version%
 echo Done.
 
 
@@ -123,7 +123,7 @@ echo -----------------------------
 
 echo Hit return to continue...
 pause 
-cd %outputDirectory%\build
+cd %outputDirectory%
 %nuget% push SrkCsv.%version%.nupkg
 echo Done.
 

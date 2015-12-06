@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SrkCsv</id>
+    <version>1.0.0</version>
+    <authors>SandRock</authors>
+    <owners>SandRock</owners>
+    <licenseUrl>https://github.com/sandrock/SrkCsv/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/sandrock/SrkCsv</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/sandrock/SrkCsv/master/res/logo-200.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Fast CSV parser that uses lambas to create data objects.</description>
+    <releaseNotes>BUGFIX: fixed a bug where a separator in a quoted value has a bad behavior .</releaseNotes>
+    <copyright>LGPL v3</copyright>
+    <tags>CSV parser</tags>
+  </metadata>
+</package>
