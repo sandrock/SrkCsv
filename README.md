@@ -128,3 +128,5 @@ And as always...
 -----------------
 
 Have a good parse!  :running:
+
+Like it? [![Flattr this](https://button.flattr.com/flattr-badge-large.png)](https://flattr.com/submit/auto?fid=m15yq1&url=https%3A%2F%2Fgithub.com%2Fsandrock%2FSrkCsv)
