@@ -30,7 +30,7 @@ namespace SrkCsv
     /// CSV reader with support for a target object type.
     /// </summary>
     /// <typeparam name="T">the target object type</typeparam>
-    public class CsvReader<T>
+    public class CsvReader<T> : ICsvReader<T>
     {
         private readonly Table<T> table;
         private CultureInfo culture = CultureInfo.InvariantCulture;

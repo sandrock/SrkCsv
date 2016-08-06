@@ -49,6 +49,7 @@
     <Compile Include="CsvParseException.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="CsvSeparator.cs" />
+    <Compile Include="ICsvReader.cs" />
     <Compile Include="Internals\Nothing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Row.cs" />
