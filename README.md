@@ -39,7 +39,7 @@ You can find tons of CSV readers everywhere on the interwebs. But:
 Example
 --------
 
-First, here is a sample CSV:
+First, here is a sample/simple CSV:
 
 ```
 Firstname,Lastname,City,Age
@@ -48,7 +48,7 @@ Matt,Gorgini,Lille,45
 Paul,Menier,Valenciennes,100
 ```
 
-This unit test will show you how it looks like when using a custom target type (Csv1Row class):
+This [unit test](https://github.com/sandrock/SrkCsv/blob/master/src/SrkCsv.UnitTests/CsvReaderTests.cs) will show you how it looks like when using a custom target type ([Csv1Row class](https://github.com/sandrock/SrkCsv/blob/master/src/SrkCsv.UnitTests/Csv1Row.cs)):
 
 ```csharp
 [TestMethod]
