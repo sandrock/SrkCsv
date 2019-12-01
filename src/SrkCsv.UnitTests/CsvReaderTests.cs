@@ -4,6 +4,7 @@ namespace SrkCsv.UnitTests
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System.IO;
+    using System.Text;
 
     [TestClass]
     public class CsvReaderTests
@@ -23,7 +24,7 @@ namespace SrkCsv.UnitTests
                 target.CellSeparator = ',';
                 target.HasHeaderLine = true;
                 var reader = new StringReader(CsvFiles.Csv1);
-                var result = target.ReadToEnd(reader);
+                var result = ReadToEnd(target, reader);
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.Columns);
                 Assert.IsNotNull(result.Rows);
@@ -54,7 +55,7 @@ namespace SrkCsv.UnitTests
                 target.CellSeparator = ',';
                 target.HasHeaderLine = true;
                 var reader = new StringReader(CsvFiles.Csv1);
-                var result = target.ReadToEnd(reader);
+                var result = ReadToEnd(target, reader);
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.Columns);
                 Assert.IsNotNull(result.Rows);
@@ -90,7 +91,7 @@ namespace SrkCsv.UnitTests
                 target.CellSeparator = ';';
                 target.HasHeaderLine = true;
                 var reader = new StringReader(CsvFiles.Csv1.Replace(CsvFiles.Csv1Separator, ";"));
-                var result = target.ReadToEnd(reader);
+                var result = ReadToEnd(target, reader);
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.Columns);
                 Assert.IsNotNull(result.Rows);
@@ -106,6 +107,67 @@ namespace SrkCsv.UnitTests
                 Assert.AreEqual("Valenciennes", result.Rows[3].Target.City);
                 Assert.AreEqual("100", result.Rows[3].Cells[3].Value);
                 Assert.AreEqual(100, result.Rows[3].Target.Age);
+            }
+
+            [TestMethod]
+            public void Csv1_Transformed_AllowMissingColumnsTrue()
+            {
+                var table = new Table<Csv1Row>();
+                table.AddColumn(0, "Firstname", x => x.Target.FirstName = x.Value);
+                table.AddColumn(1, "Lastname", x => x.Target.LastName = x.Value);
+                table.AddColumn(2, "City", x => x.Target.City = x.Value);
+                table.AddColumn(3, "Age", x =>
+                {
+                    int age;
+                    var ok = int.TryParse(x.Value, out age);
+                    x.Target.Age = age;
+                    return ok;
+                });
+                table.AddColumn(4, "Extra", x => x.Target.Extra = x.Value);
+                var target = new CsvReader<Csv1Row>(table);
+                target.CellSeparator = ',';
+                target.HasHeaderLine = true;
+                target.AllowMissingColumns = true;
+                var reader = new StringReader(CsvFiles.Csv1);
+                var result = ReadToEnd(target, reader);
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Columns);
+                Assert.IsNotNull(result.Rows);
+                Assert.AreEqual(4, result.Rows.Count);
+                Assert.AreEqual("Firstname", result.Rows[0].Cells[0].Value);
+                ////Assert.AreEqual("Firstname", result.Rows[0].Target.FirstName);
+                Assert.IsTrue(result.Rows[0].IsHeader);
+                Assert.AreEqual("Gregory", result.Rows[1].Cells[0].Value);
+                Assert.AreEqual("Gregory", result.Rows[1].Target.FirstName);
+                Assert.AreEqual("Gorgini", result.Rows[2].Cells[1].Value);
+                Assert.AreEqual("Gorgini", result.Rows[2].Target.LastName);
+                Assert.AreEqual("Valenciennes", result.Rows[3].Cells[2].Value);
+                Assert.AreEqual("Valenciennes", result.Rows[3].Target.City);
+                Assert.AreEqual("100", result.Rows[3].Cells[3].Value);
+                Assert.AreEqual(100, result.Rows[3].Target.Age);
+            }
+
+            [TestMethod, ExpectedException(typeof(CsvParseException))]
+            public void Csv1_Transformed_AllowMissingColumnsFalse()
+            {
+                var table = new Table<Csv1Row>();
+                table.AddColumn(0, "Firstname", x => x.Target.FirstName = x.Value);
+                table.AddColumn(1, "Lastname", x => x.Target.LastName = x.Value);
+                table.AddColumn(2, "City", x => x.Target.City = x.Value);
+                table.AddColumn(3, "Age", x =>
+                {
+                    int age;
+                    var ok = int.TryParse(x.Value, out age);
+                    x.Target.Age = age;
+                    return ok;
+                });
+                table.AddColumn(4, "Extra", x => x.Target.Extra = x.Value);
+                var target = new CsvReader<Csv1Row>(table);
+                target.CellSeparator = ',';
+                target.HasHeaderLine = true;
+                target.AllowMissingColumns = false;
+                var reader = new StringReader(CsvFiles.Csv1);
+                var result = target.ReadToEnd(reader);
             }
         }
 
@@ -241,6 +303,29 @@ namespace SrkCsv.UnitTests
                 Assert.AreEqual("\"la Majuscule\" Bibliothèque Municipale", result.Rows[3].Cells[0].Value);
                 Assert.AreEqual("\"LA LICONTE\"", result.Rows[4].Cells[1].Value);
                 Assert.AreEqual("Bibliotheque Provinciale, Service Culturel", result.Rows[5].Cells[0].Value);
+            }
+        }
+
+        public static Table<T> ReadToEnd<T>(CsvReader<T> reader, TextReader text)
+        {
+            try
+            {
+                return reader.ReadToEnd(text);
+            }
+            catch (CsvParseException ex)
+            {
+                var message = new StringBuilder("CsvReader.ReadToEnd failed with " + ex.GetType().Name + ": " + ex.Message);
+                if (ex.Errors != null)
+                {
+                    message.AppendLine();
+                    foreach (var error in ex.Errors)
+                    {
+                        message.AppendLine(error);
+                    }
+                }
+
+                Assert.Fail(message.ToString());
+                throw;
             }
         }
     }

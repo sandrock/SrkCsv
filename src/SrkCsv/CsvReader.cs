@@ -62,6 +62,11 @@ namespace SrkCsv
         public bool HasHeaderLine { get; set; }
 
         /// <summary>
+        /// Gets or sets whether to keep a copy of the line in the row objects.
+        /// </summary>
+        public bool KeepLines { get; set; }
+
+        /// <summary>
         /// Gets or sets the culture.
         /// </summary>
         public CultureInfo Culture
@@ -69,6 +74,11 @@ namespace SrkCsv
             get { return this.culture; }
             set { this.culture = value; }
         }
+
+        /// <summary>
+        /// Gets or sets whether some columns can be missing. An exception is usually thrown when a column is absent.
+        /// </summary>
+        public bool AllowMissingColumns { get; set; }
 
         /// <summary>
         /// Reads to end.
@@ -227,6 +237,10 @@ namespace SrkCsv
                 {
                     colCount = data[i].Count;
                 }
+                else if (data[i].Count < colCount && this.AllowMissingColumns)
+                {
+                    ////err(i, "Invalid cell count '" + data[i].Count + "'; expected '" + colCount + "'");
+                }
                 else if (data[i].Count != colCount)
                 {
                     err(i, "Invalid cell count '" + data[i].Count + "'; expected '" + colCount + "'");
@@ -255,12 +269,17 @@ namespace SrkCsv
                     var row = this.table.CreateRow(i, culture, this.HasHeaderLine && i == 0);
                     table.Rows.Add(row);
 
+                    if (this.KeepLines)
+                    {
+                        ////row.Line = lines[i];
+                    }
+
                     var cells = new List<Cell<T>>(table.Columns.Count);
                     for (int c = 0; c < table.Columns.Count; c++)
                     {
                         var col = table.Columns[c];
                         var cell = line.Count >= (col.Index + 1) ? line[col.Index] : null;
-                        if (cell == null)
+                        if (cell == null && !this.AllowMissingColumns)
                         {
                             err(i, "CSV row " + i + " does not contain column '" + col.Name + "' because index " + col.Index + " does not exist");
                         }

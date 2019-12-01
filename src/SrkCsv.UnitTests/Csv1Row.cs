@@ -11,5 +11,6 @@ namespace SrkCsv.UnitTests
         public string LastName { get; set; }
         public string City { get; set; }
         public int Age { get; set; }
+        public string Extra { get; set; }
     }
 }
