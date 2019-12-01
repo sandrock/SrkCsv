@@ -5,12 +5,13 @@
     <version>1.0.0</version>
     <authors>SandRock</authors>
     <owners>SandRock</owners>
-    <licenseUrl>https://github.com/sandrock/SrkCsv/blob/master/LICENSE</licenseUrl>
+    <license type="expression">Unlicense</license>
     <projectUrl>https://github.com/sandrock/SrkCsv</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/sandrock/SrkCsv/master/res/logo-200.png</iconUrl>
+    <icon>images\icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Fast CSV parser that uses lambas to create data objects.</description>
-    <releaseNotes>BUGFIX: fixed a bug where a separator in a quoted value has a bad behavior .</releaseNotes>
+    <releaseNotes>Support for netstandard2.0. New CsvReader option: AllowMissingColumns.</releaseNotes>
     <copyright>LGPL v3</copyright>
     <tags>CSV parser</tags>
   </metadata>

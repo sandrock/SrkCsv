@@ -9,6 +9,7 @@ echo:
 
 set currentDirectory=%CD%
 cd ..
+set rootDirectory=%CD%
 cd build
 set outputDirectory=%CD%
 cd %currentDirectory%
@@ -65,22 +66,26 @@ echo -----------------------------
 cd ..
 cd src
 set solutionDirectory=%CD%
-%msbuild4% "SrkCsv.sln" /p:Configuration=Release /nologo /verbosity:q
-
-if not %ERRORLEVEL% == 0 (
- echo ERROR: build failed. exiting.
- cd %currentDirectory%
- pause
- exit
-)
-echo Done.
+REM %msbuild4% "SrkCsv.sln" /p:Configuration=Release /nologo /verbosity:q
+REM 
+REM if not %ERRORLEVEL% == 0 (
+REM  echo ERROR: build failed. exiting.
+REM  cd %currentDirectory%
+REM  pause
+REM  exit
+REM )
+REM echo Done.
 
 echo:
 echo Copy libs
 echo -----------------------------
-mkdir %outputDirectory%\lib
-mkdir %outputDirectory%\lib\net40
-xcopy /Q %solutionDirectory%\SrkCsv\bin\Release\* %outputDirectory%\lib\net40\
+if NOT EXIST %outputDirectory%\lib                mkdir %outputDirectory%\lib
+if NOT EXIST %outputDirectory%\lib\net40          mkdir %outputDirectory%\lib\net40
+if NOT EXIST %outputDirectory%\lib\netstandard2.0 mkdir %outputDirectory%\lib\netstandard2.0
+if NOT EXIST %outputDirectory%\images             mkdir %outputDirectory%\images
+xcopy /Q /Y %solutionDirectory%\SrkCsv\bin\Release\net40\* %outputDirectory%\lib\net40\
+xcopy /Q /Y %solutionDirectory%\SrkCsv\bin\Release\netstandard2.0\* %outputDirectory%\lib\netstandard2.0\
+copy /Y %rootDirectory%\res\logo-200.png %outputDirectory%\images\icon.png
 echo Done.
 
 
